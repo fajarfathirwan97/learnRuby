@@ -5,7 +5,7 @@
     </div>
 
     <ul class="list-unstyled components">
-      <p><%= current_user.email %></p>
+      <p><%= current_user && current_user.email || '' %></p>
       <li>
         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">User Management</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">

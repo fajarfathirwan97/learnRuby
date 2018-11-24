@@ -1,0 +1,65 @@
+
+<div class='col-xs-12'>
+  <div class='pull-right col-xs-6'>
+    <div class="form-group col-xs-4">
+      <select class="form-control" id='field'>
+        <option value=''><%=translate("placeholder.empty")%></option>
+        <option value='full_name'><%=translate('field.user.full_name')%></option>
+        <option value='email'><%=translate('field.user.email')%></option>
+      </select>
+    </div>
+    <div class="form-group col-xs-2">
+      <select class="form-control" id='operator'>
+        <option value=''><%=translate('placeholder.empty')%></option>
+        <option value='LIKE'><%=translate('placeholder.equal')%></option>
+        <option value='NOT LIKE'><%=translate('placeholder.not_equal')%></option>
+      </select>
+    </div>
+    <div class="form-group col-xs-6">
+      <input placeholder='<%= translate("placeholder.search") %>' type="search" class="form-control" id="search">
+    </div>
+  </div>
+</div>
+<div class='col-xs-12'>
+  <table class="table table-strip col-xs-12">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+  </table>
+  <% content_for :script do%>
+    <script>
+      $(document).ready(()=>{
+        let dt = $('.table')
+        $('#search').keypress(function(e){
+          if(e.which == 13){
+            dt.DataTable().draw()
+          }
+        })
+        dt.DataTable( {
+            "processing": true,
+            "serverSide": true,
+            searching:false,
+            "columns": [
+              { "name": "full_name",   "data": 'full_name' },
+              { "name": "email",  "data": 'email' },
+            ],
+            "columnDefs": [
+              { "name": "full_name",   "data": 'full_name' },
+              { "name": "email",  "data": 'email' },
+            ],
+            "ajax": {
+              url : "<%= @dataTableUrl %>",
+              data :(d)=> {
+                d.q = $('#search').val()
+                d.field = $('#field').val()
+                d.operator = $('#operator').val()
+              }
+            }
+        });
+      })
+    </script>
+  <% end %>
+</div>
