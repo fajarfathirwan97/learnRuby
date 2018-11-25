@@ -69,7 +69,9 @@ en:
     user:
         full_name: 'Full Name'
         role_id: 'Role'
+        organisasi_id : 'Organization'
         placeholder:
+          organisasi_id : 'Select Organization'
           first_name: 'Enter Your First Name...'
           role_id: 'Select Role...'
           last_name: 'Enter Your Last Name...'

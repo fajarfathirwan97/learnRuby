@@ -51,6 +51,20 @@
           <%end%>
         </div>
         <div class="form-group">
+          <label for="organisasi_id"><%= t("field.user.organisasi_id") %></label>
+           <select class='form-control' name='organisasi_id'>
+              <option value=""><%= t('field.user.placeholder.organisasi_id') %></option>
+              <% @organization.each do |organization| %>
+                <option "<%= organization.id == @user.organisasi_id ? 'selected' : ''%>" value="<%= organization.id %>"><%= organization.name %></option>
+              <% end %>
+            </select>
+           <%if flash[:error] && flash[:error]["organisasi_id"]%>
+            <% flash[:error]["organisasi_id"].each do |flashDetail|%>
+              <li class="form-text text-muted"><small id="organisasi_idHelp"><%= flashDetail %></small></li>
+            <%end%>
+          <%end%>
+        </div>
+        <div class="form-group">
           <label for="role_id"><%= t("field.user.role_id") %></label>
           <select class='form-control' name='role_id'>
             <option value=""><%= t('field.user.placeholder.role_id') %></option>

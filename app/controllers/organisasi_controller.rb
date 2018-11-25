@@ -11,6 +11,7 @@ class OrganisasiController < ApplicationController
 
   def detail
     @data = Organisasi.find_by(id: params["id"])
+    @dataTableUrl = route_for(:userDatatable)
   end
 
   def update

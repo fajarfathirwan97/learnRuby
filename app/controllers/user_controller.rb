@@ -13,9 +13,14 @@ class UserController < ApplicationController
     @roles = Role.all
   end
 
+  def getOrganization
+    @organization = Organisasi.all
+  end
+
   def add
     @user = User.new()
     self.getRoles
+    self.getOrganization
   end
 
   def detail
@@ -25,6 +30,7 @@ class UserController < ApplicationController
   def update
     @user = User.where(["id = ?", params[:id]]).first
     self.getRoles
+    self.getOrganization
   end
 
   def delete
@@ -37,6 +43,7 @@ class UserController < ApplicationController
     model.last_name = params[:last_name]
     model.phone = params[:phone]
     model.role_id = params[:role_id]
+    model.organisasi_id = params[:organisasi_id]
     model.email = params[:email]
     return model
   end
@@ -93,7 +100,9 @@ class UserController < ApplicationController
 
   def datatable
     actionButton = "<button class=\"btn btn-default btn-detail\" data-id=\"$id\"><i class=\"fa fa-info\"></i></button>"
+
     actionButton += "<button class=\"btn btn-default btn-delete\" data-id=\"$id\"><i class=\"fa fa-trash\"></i></button>"
+    
     actionButton += "<button class=\"btn btn-default btn-update\" data-id=\"$id\"><i class=\"fa fa-edit\"></i></button>"
     datas = User.select([
       "id",
@@ -104,6 +113,9 @@ class UserController < ApplicationController
       .order(self.column[params["order"]["0"]["column"].to_i] + " #{params["order"]["0"]["dir"]}")
     if params[:field] != "" && params[:operator] != ""
       datas = datas.where(["#{params[:field]} #{params[:operator]} ?", "%#{params[:q]}%"])
+    end
+    if params["organization_id"] && params["organizationDetail"]
+      datas = datas.where(["organisasi_id = #{params["organization_id"]}"])
     end
     render json: {
       data: datas,
