@@ -31,11 +31,23 @@
 
 en:
   hello: "Hello world"
+  response:
+    success_update: "Success Update Data"
   placeholder:
     search: "Search"
     equal: "Equal"
     not_equal: "Not Equal"
     empty: "Select"
   field:
-    user: 
+    role:
+      name : "Role Name"
+    user:
         full_name: 'Full Name'
+        role_id: 'Role'
+        placeholder:
+          first_name: 'Enter Your First Name...'
+          role_id: 'Select Role...'
+          last_name: 'Enter Your Last Name...'
+          email: 'Enter Your Email...'
+          phone: 'Enter Your First Name...'
+          password: 'Enter Your Password...'
