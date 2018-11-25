@@ -68,7 +68,7 @@ class UserController < ApplicationController
   def addProcess
     user = User.new
     user = self.populateUser(user, params)
-    user.password = User.new(:password => params[:password]).encrypted_password
+    user.encrypted_password = User.new(:password => params[:password]).encrypted_password
     if (params[:avatar])
       user.avatar = self.uploadAvatar(params[:avatar], nil)
     end
