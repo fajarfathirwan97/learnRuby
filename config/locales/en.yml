@@ -31,6 +31,9 @@
 
 en:
   hello: "Hello world"
+  page:
+    user: 
+      add: "Add User"
   response:
     success_update: "Success Update Data"
   placeholder:

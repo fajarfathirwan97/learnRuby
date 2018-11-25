@@ -9,14 +9,27 @@ class UserController < ApplicationController
     @dataTableUrl = route_for(:userDatatable)
   end
 
+  def getRoles
+    @roles = Role.all
+  end
+
+  def add
+    @user = User.new()
+    self.getRoles
+  end
+
   def detail
     @user = User.where(["id = ?", params[:id]]).first
-    pp @user.role
   end
 
   def update
     @user = User.where(["id = ?", params[:id]]).first
-    @roles = Role.all
+    self.getRoles
+  end
+
+  def addProcess
+    image = params[:avatar]
+    pp image
   end
 
   def updateProcess

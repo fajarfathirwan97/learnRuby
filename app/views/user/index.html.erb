@@ -1,5 +1,8 @@
 
 <div class='col-xs-12'>
+  <div class='col-xs-6'>
+    <button class='btn btn-default btn-add'><i class='fa fa-plus'></i></button>
+  </div>
   <div class='pull-right col-xs-6'>
     <div class="form-group col-xs-4">
       <select class="form-control" id='field'>
@@ -34,9 +37,15 @@
     <script>
       $(document).ready(()=>{
         let dt = $('.table')
+
         dt.on('click','.btn-detail',function(){
           let url = "<%= route_for(:userDetail) %>"
           window.open(`${url}/${$(this).attr('data-id')}`)
+        })
+        
+        $('.btn-add').on('click',function(){
+          let url = "<%= route_for(:userAdd) %>"
+          window.open(`${url}`)
         })
 
         dt.on('click','.btn-update',function(){
