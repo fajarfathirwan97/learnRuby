@@ -1,5 +1,10 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
+  before_action :checkPermission
+
+  def initializae
+    p "kuntu"
+  end
 
   def column
     @column = ["full_name", "email"]
