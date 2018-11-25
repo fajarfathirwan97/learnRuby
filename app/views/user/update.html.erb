@@ -3,7 +3,7 @@
     Update User
   </div>
   <div class="panel-body">
-      <%= form_tag(route_for(:userUpdateProcess), method: "POST") do %>
+      <%= form_tag(route_for(:userUpdateProcess), method: "POST",enctype:'multipart/form-data') do %>
       <input type="hidden" readonly name='id' value="<%= @user.id %>">
         <div class="form-group">
           <label for="email"><%= t("field.user.email") %></label>

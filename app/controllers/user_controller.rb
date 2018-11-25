@@ -27,9 +27,41 @@ class UserController < ApplicationController
     self.getRoles
   end
 
+  def populateUser(model, params)
+    model.first_name = params[:first_name]
+    model.last_name = params[:last_name]
+    model.phone = params[:phone]
+    model.role_id = params[:role_id]
+    model.email = params[:email]
+    return model
+  end
+
+  def uploadAvatar(avatar, prevAvatar)
+    if (prevAvatar != nil && File.exists?("#{Rails.root}/public/uploads/avatar/#{prevAvatar.split("/uploads/avatar/")[1]}"))
+      File.delete("#{Rails.root}/public/uploads/avatar/#{prevAvatar.split("/uploads/avatar/")[1]}")
+    end
+    imageExt = File.extname(avatar.original_filename)
+    avatar.original_filename = "#{DateTime.now.strftime("%Q")}#{imageExt}"
+    uploader = AvatarUploader.new
+    uploader.store!(avatar)
+    uploader.retrieve_from_store!(avatar.original_filename)
+    return "#{request.domain}:#{request.port}/uploads/avatar/#{uploader.filename}"
+  end
+
   def addProcess
-    image = params[:avatar]
-    pp image
+    user = User.new
+    user = self.populateUser(user, params)
+    user.password = User.new(:password => params[:password]).encrypted_password
+    if (params[:avatar])
+      user.avatar = self.uploadAvatar(params[:avatar], nil)
+    end
+    if (user.valid?)
+      flash[:success] = t("response.success_update")
+      user.save
+    else
+      flash[:error] = user.errors
+    end
+    redirect_to request.referer
   end
 
   def updateProcess
@@ -39,8 +71,11 @@ class UserController < ApplicationController
     user.phone = params[:phone]
     user.role_id = params[:role_id]
     user.email = params[:email]
+    if (params[:avatar])
+      user.avatar = self.uploadAvatar(params[:avatar], user.avatar)
+    end
     if user.encrypted_password != params[:password]
-      user.encrypted_password = User.generate_token(params[:password])
+      user.encrypted_password = User.new(:password => params[:password]).encrypted_password
     end
     if (user.valid?)
       flash[:success] = t("response.success_update")
