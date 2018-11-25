@@ -27,6 +27,11 @@ class UserController < ApplicationController
     self.getRoles
   end
 
+  def delete
+    @user = User.where(["id = ?", params[:id]]).destroy_all
+    redirect_to request.referer
+  end
+
   def populateUser(model, params)
     model.first_name = params[:first_name]
     model.last_name = params[:last_name]
@@ -94,7 +99,7 @@ class UserController < ApplicationController
       "id",
       "email",
       "CONCAT(first_name,' ',last_name) as full_name",
-      "REPLACE('#{actionButton}', '$id', id::char) as action",
+      "REPLACE('#{actionButton}', '$id', id::varchar) as action",
     ]).limit(params[:length]).offset(params[:start])
       .order(self.column[params["order"]["0"]["column"].to_i] + " #{params["order"]["0"]["dir"]}")
     if params[:field] != "" && params[:operator] != ""

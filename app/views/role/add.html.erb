@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+  <div class="panel-footer">
+    <%=t("page.role.add")%>
+  </div>
+  <div class="panel-body">
+      <%= form_tag(route_for(:roleAddProcess), method: "POST",enctype:'multipart/form-data') do %>
+        <div class="form-group">
+          <label for="name"><%= t("field.role.name") %></label>
+          <input type="input" name='name' value="<%= @role.name %>"  class="form-control" id="name" aria-describedby="nameHelp" placeholder="<%= t("field.role.placeholder.name") %>">
+            <%if flash[:error] && flash[:error]["name"] %>
+              <% flash[:error]["name"].each do |flashDetail|%>
+                <li class="form-text text-muted"><small id="nameHelp"><%= flashDetail %></small></li>
+              <%end%>
+            <%end%>
+        </div>
+        <div class="form-group">
+          <label for="permission"><%= t("field.role.permission") %></label>
+            <select class='form-control' multiple name='permission[]'>
+              <% @routeList.each do |route| %>
+                <option value="<%=route%>"><%=t("route.#{route}")%></option>
+              <%end%>
+            </select>
+            <%if flash[:error] && flash[:error]["permission"] %>
+              <% flash[:error]["permission"].each do |flashDetail|%>
+                <li class="form-text text-muted"><small id="permissionHelp"><%= flashDetail %></small></li>
+              <%end%>
+            <%end%>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary col-xs-12">Submit</button>
+        </div>
+      <% end %>
+  </div>
+</div>

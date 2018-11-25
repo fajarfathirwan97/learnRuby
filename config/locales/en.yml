@@ -31,6 +31,19 @@
 
 en:
   hello: "Hello world"
+  route:
+    "role#index" : "Role Index"
+    "role#detail" : "Role Detail"
+    "role#add" : "Role Add"
+    "role#update" : "Role Update"
+    "role#datatable" : "Role Datatable"
+    "user#index" : "User Index"
+    "user#detail" : "User Detail"
+    "user#add" : "User Add"
+    "user#update" : "User Update"
+    "user#datatable" : "User Datatable"
+    "role#delete" : "Role Delete"
+    "user#delete" : "User Delete"
   page:
     user: 
       add: "Add User"
@@ -44,6 +57,8 @@ en:
   field:
     role:
       name : "Role Name"
+      placeholder:
+          name: 'Enter the name of the role here...'
     user:
         full_name: 'Full Name'
         role_id: 'Role'
