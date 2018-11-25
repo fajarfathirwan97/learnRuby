@@ -26,6 +26,7 @@
       <tr>
         <th>Full Name</th>
         <th>Email</th>
+        <th>Action</th>
       </tr>
     </thead>
   </table>
@@ -33,6 +34,16 @@
     <script>
       $(document).ready(()=>{
         let dt = $('.table')
+        dt.on('click','.btn-detail',function(){
+          let url = "<%= route_for(:userDetail) %>"
+          window.open(`${url}/${$(this).attr('data-id')}`)
+        })
+
+        dt.on('click','.btn-update',function(){
+          let url = "<%= route_for(:userUpdate) %>"
+          window.open(`${url}/${$(this).attr('data-id')}`)
+        })
+
         $('#search').keypress(function(e){
           if(e.which == 13){
             dt.DataTable().draw()
@@ -45,10 +56,12 @@
             "columns": [
               { "name": "full_name",   "data": 'full_name' },
               { "name": "email",  "data": 'email' },
+              { "name": "action",  "data": 'action' },
             ],
             "columnDefs": [
               { "name": "full_name",   "data": 'full_name' },
               { "name": "email",  "data": 'email' },
+              { "name": "action",  "data": 'action' },
             ],
             "ajax": {
               url : "<%= @dataTableUrl %>",

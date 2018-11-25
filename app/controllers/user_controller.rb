@@ -6,15 +6,47 @@ class UserController < ApplicationController
   end
 
   def index
-    @users = User.limit(10)
     @dataTableUrl = route_for(:userDatatable)
   end
 
+  def detail
+    @user = User.where(["id = ?", params[:id]]).first
+    pp @user.role
+  end
+
+  def update
+    @user = User.where(["id = ?", params[:id]]).first
+    @roles = Role.all
+  end
+
+  def updateProcess
+    user = User.find_by(id: params[:id])
+    user.first_name = params[:first_name]
+    user.last_name = params[:last_name]
+    user.phone = params[:phone]
+    user.role_id = params[:role_id]
+    user.email = params[:email]
+    if user.encrypted_password != params[:password]
+      user.encrypted_password = User.generate_token(params[:password])
+    end
+    if (user.valid?)
+      flash[:success] = t("response.success_update")
+      user.save
+    else
+      flash[:error] = user.errors
+    end
+    redirect_to request.referer
+  end
+
   def datatable
+    actionButton = "<button class=\"btn btn-default btn-detail\" data-id=\"$id\"><i class=\"fa fa-info\"></i></button>"
+    actionButton += "<button class=\"btn btn-default btn-delete\" data-id=\"$id\"><i class=\"fa fa-trash\"></i></button>"
+    actionButton += "<button class=\"btn btn-default btn-update\" data-id=\"$id\"><i class=\"fa fa-edit\"></i></button>"
     datas = User.select([
       "id",
       "email",
       "CONCAT(first_name,' ',last_name) as full_name",
+      "REPLACE('#{actionButton}', '$id', id::char) as action",
     ]).limit(params[:length]).offset(params[:start])
       .order(self.column[params["order"]["0"]["column"].to_i] + " #{params["order"]["0"]["dir"]}")
     if params[:field] != "" && params[:operator] != ""

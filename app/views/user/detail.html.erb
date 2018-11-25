@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+  <div class="panel-footer">
+    User Detail
+  </div>
+  <div class="panel-body">
+    <div class='col-xs-12'>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.user.first_name") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @user.first_name %> </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.user.last_name") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @user.last_name %> </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.user.email") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @user.email %> </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.user.phone") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @user.phone %> </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-footer">
+    Role
+  </div>
+  <div class="panel-body">
+    <div class='col-xs-12'>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.role.name") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @user.role.name %> </div>
+      </div>
+    </div>
+  </div>
+</div>
+
