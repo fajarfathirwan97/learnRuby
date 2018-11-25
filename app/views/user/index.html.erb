@@ -1,7 +1,9 @@
 
 <div class='col-xs-12'>
   <div class='col-xs-6'>
-    <button class='btn btn-default btn-add'><i class='fa fa-plus'></i></button>
+    <%if (JSON.parse(current_user.role.permission).include? '*') || (JSON.parse(current_user.role.permission).include? 'user#add') %>
+      <button class='btn btn-default btn-add'><i class='fa fa-plus'></i></button>
+    <%end%>
   </div>
   <div class='pull-right col-xs-6'>
     <div class="form-group col-xs-4">
@@ -77,12 +79,12 @@
             "columns": [
               { "name": "full_name",   "data": 'full_name' },
               { "name": "email",  "data": 'email' },
-              { "name": "action",  "data": 'action' },
+              { "name": "action",  "data": 'action',orderable:false },
             ],
             "columnDefs": [
               { "name": "full_name",   "data": 'full_name' },
               { "name": "email",  "data": 'email' },
-              { "name": "action",  "data": 'action' },
+              { "name": "action",  "data": 'action',orderable:false },
             ],
             "ajax": {
               url : "<%= @dataTableUrl %>",

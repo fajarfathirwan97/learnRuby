@@ -2,6 +2,7 @@
   <nav id="sidebar">
     <div class="sidebar-header">
       <h2>Organization</h2>
+      <%=JSON.parse(current_user.role.permission)%>
     </div>
 
     <ul class="list-unstyled components">
@@ -9,12 +10,18 @@
       <li>
         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">User Management</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
-          <li><a href="<%= route_for(:userIndex) %> ">User</a></li>
-          <li><a href="<%= route_for(:roleIndex) %> ">Role</a></li>
+          <%if (JSON.parse(current_user.role.permission).include? '*') || (JSON.parse(current_user.role.permission).include? 'user#index') %>
+            <li><a href="<%= route_for(:userIndex) %> ">User</a></li>
+          <%end%>
+          <%if (JSON.parse(current_user.role.permission).include? '*') || (JSON.parse(current_user.role.permission).include? 'role#index') %>
+            <li><a href="<%= route_for(:roleIndex) %> ">Role</a></li>
+          <%end %>
         </ul>
       </li>
       <li>
-        <a href="<%= route_for(:organisasiIndex) %> ">Organization</a>
+        <%if (JSON.parse(current_user.role.permission).include? '*') || (JSON.parse(current_user.role.permission).include? 'organisasi#index') %>
+          <a href="<%= route_for(:organisasiIndex) %> ">Organization</a>
+        <%end%>
       </li>
     </ul>
   </nav>

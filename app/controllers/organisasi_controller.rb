@@ -80,23 +80,32 @@ class OrganisasiController < ApplicationController
   end
 
   def datatable
-    actionButton = "<button class=\"btn btn-default btn-detail\" data-id=\"$id\"><i class=\"fa fa-info\"></i></button>"
-    actionButton += "<button class=\"btn btn-default btn-delete\" data-id=\"$id\"><i class=\"fa fa-trash\"></i></button>"
-    actionButton += "<button class=\"btn btn-default btn-update\" data-id=\"$id\"><i class=\"fa fa-edit\"></i></button>"
     datas = Organisasi.select([
       "id",
       "name",
       "email",
-      "REPLACE('#{actionButton}', '$id', id::varchar) as action",
     ]).limit(params[:length]).offset(params[:start])
       .order(self.column[params["order"]["0"]["column"].to_i] + " #{params["order"]["0"]["dir"]}")
     if params[:field] != "" && params[:operator] != ""
       datas = datas.where(["#{params[:field]} #{params[:operator]} ?", "%#{params[:q]}%"])
     end
+    datas = JSON.parse(datas.to_json)
+    datas.each_with_index do |data, index|
+      if (JSON.parse(current_user.role.permission).include? "*") || (JSON.parse(current_user.role.permission).include? "organisasi#detail") && data["id"] == current_user.organisasi_id
+        actionButton = "<button class=\"btn btn-default btn-detail\" data-id=#{data["id"]}><i class=\"fa fa-info\"></i></button>"
+      end
+      if (JSON.parse(current_user.role.permission).include? "*") || (JSON.parse(current_user.role.permission).include? "organisasi#delete") && data["id"] == current_user.organisasi_id
+        actionButton += "<button class=\"btn btn-default btn-delete\" data-id=#{data["id"]}><i class=\"fa fa-trash\"></i></button>"
+      end
+      if (JSON.parse(current_user.role.permission).include? "*") || (JSON.parse(current_user.role.permission).include? "organisasi#update") && data["id"] == current_user.organisasi_id
+        actionButton += "<button class=\"btn btn-default btn-update\" data-id=#{data["id"]}><i class=\"fa fa-edit\"></i></button>"
+      end
+      data[:action] = actionButton
+    end
     render json: {
       data: datas,
       draw: params[:draw],
-      recordsFiltered: datas.length,
+      recordsFiltered: datas.count,
       recordsTotal: Organisasi.count(),
     }
   end

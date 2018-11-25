@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  attr_accessor :action
   validates :first_name, presence: true, on: :create
   validates :last_name, presence: true, on: :create
   validates :role_id, presence: true, on: :create
