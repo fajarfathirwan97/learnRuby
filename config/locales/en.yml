@@ -55,10 +55,17 @@ en:
     not_equal: "Not Equal"
     empty: "Select"
   field:
+    organisasi:
+      name : "Organization Name"
+      placeholder:
+          name: 'Enter name of the organization here...'
+          email: 'Enter email of the organization here...'
+          website: 'Enter website of the organization here...'
+          phone: 'Enter phone of the organization here...'
     role:
       name : "Role Name"
       placeholder:
-          name: 'Enter the name of the role here...'
+          name: 'Enter name of the role here...'
     user:
         full_name: 'Full Name'
         role_id: 'Role'

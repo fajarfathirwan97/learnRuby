@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-footer">
+    Organization Detail
+  </div>
+  <div class="panel-body">
+    <div class='col-xs-12'>
+      <img src="http://<%= @data.logo%>" height=200>
+      <br><br>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.organsisasi.name") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @data.name %> </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.organisasi.email") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @data.email %> </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.organsisasi.phone") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @data.phone %> </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-2'> <%= translate("field.organisasi.website") %> </div>
+        <div class='col-xs-1'> : </div>
+        <div class='col-xs-9'> <%= @data.website %> </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+  <div class="panel-footer">
+    <%=t("page.organisasi.add")%>
+  </div>
+  <%if flash[:error]%>
+    <%= flash[:error]%>
+  <% end %>
+  <div class="panel-body">
+      <%= form_tag(route_for(:organisasiAddProcess), method: "POST",enctype:'multipart/form-data') do %>
+      <input type="hidden" readonly name='id' value="<%= @data.id %>">
+        <div class="form-group">
+          <label for="email"><%= t("field.organisasi.email") %></label>
+          <input type="email" name='email' value="<%= @data.email %>"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="<%= t("field.organisasi.placeholder.email") %>">
+            <%if flash[:error] && flash[:error]["email"] %>
+              <% flash[:error]["email"].each do |flashDetail|%>
+                <li class="form-text text-muted"><small id="emailHelp"><%= flashDetail %></small></li>
+              <%end%>
+            <%end%>
+        </div>
+        <div class="form-group">
+          <label for="name"><%= t("field.organisasi.name") %></label>
+          <input type="text" name='name' value="<%= @data.name %>" class="form-control" id="name" aria-describedby="nameHelp" placeholder="<%= t("field.organisasi.placeholder.name") %>">
+          <%if flash[:error] && flash[:error]["name"]%>
+            <% flash[:error]["name"].each do |flashDetail|%>
+              <li class="form-text text-muted"><small id="nameHelp"><%= flashDetail %></small></li>
+            <%end%>
+          <%end%>
+        </div>
+        <div class="form-group">
+          <label for="website"><%= t("field.organisasi.website") %></label>
+          <input type="text" name='website' value="<%= @data.website %>"  class="form-control" id="website" aria-describedby="websiteHelp" placeholder="<%= t("field.organisasi.placeholder.website") %>">
+          <%if flash[:error] && flash[:error]["website"]%>
+            <% flash[:error]["website"].each do |flashDetail|%>
+              <li class="form-text text-muted"><small id="websiteHelp"><%= flashDetail %></small></li>
+            <%end%>
+          <%end%>
+        </div>
+        <div class="form-group">
+          <label for="phone"><%= t("field.organisasi.phone") %></label>
+          <input type="number" name='phone' value="<%= @data.phone %>"  class="form-control" id="phone" aria-describedby="phoneHelp" placeholder="<%= t("field.organisasi.placeholder.phone") %>">
+           <%if flash[:error] && flash[:error]["phone"]%>
+            <% flash[:error]["phone"].each do |flashDetail|%>
+              <li class="form-text text-muted"><small id="phoneHelp"><%= flashDetail %></small></li>
+            <%end%>
+          <%end%>
+        </div>
+        <div class="form-group">
+          <label for="logo"><%= t("field.organisasi.logo") %></label>
+          <input name='logo' type="file" class="form-control" id="logo" aria-describedby="logoHelp">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary col-xs-12">Submit</button>
+        </div>
+      <% end %>
+  </div>
+</div>

@@ -1,2 +1,96 @@
-<h1>Welcome !</h1>
-<p><%= @user %></p>
+
+<div class='col-xs-12'>
+  <div class='col-xs-6'>
+    <button class='btn btn-default btn-add'><i class='fa fa-plus'></i></button>
+  </div>
+  <div class='pull-right col-xs-6'>
+    <div class="form-group col-xs-4">
+      <select class="form-control" id='field'>
+        <option value=''><%=translate("placeholder.empty")%></option>
+        <option value='name'><%=translate('field.organisasi.name')%></option>
+        <option value='email'><%=translate('field.organisasi.email')%></option>
+      </select>
+    </div>
+    <div class="form-group col-xs-2">
+      <select class="form-control" id='operator'>
+        <option value=''><%=translate('placeholder.empty')%></option>
+        <option value='ILIKE'><%=translate('placeholder.equal')%></option>
+        <option value='NOT ILIKE'><%=translate('placeholder.not_equal')%></option>
+      </select>
+    </div>
+    <div class="form-group col-xs-6">
+      <input placeholder='<%= translate("placeholder.search") %>' type="search" class="form-control" id="search">
+    </div>
+  </div>
+</div>
+<div class='col-xs-12'>
+  <table class="table table-strip col-xs-12">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+  </table>
+  <% content_for :script do%>
+    <script>
+      $(document).ready(()=>{
+        let dt = $('.table')
+
+        dt.on('click','.btn-detail',function(){
+          let url = "<%= route_for(:organisasiDetail) %>"
+          window.open(`${url}/${$(this).attr('data-id')}`)
+        })
+
+        dt.on('click','.btn-delete',function(){
+          let url = "<%= route_for(:organisasiDelete) %>"
+           $.ajax({
+              url: `${url}/${$(this).attr('data-id')}`,
+              type: 'DELETE',
+              success: dt.DataTable().draw(),
+          });
+        })
+
+        $('.btn-add').on('click',function(){
+          let url = "<%= route_for(:organisasiAdd) %>"
+          window.open(`${url}`)
+        })
+
+        dt.on('click','.btn-update',function(){
+          let url = "<%= route_for(:organisasiUpdate) %>"
+          window.open(`${url}/${$(this).attr('data-id')}`)
+        })
+
+        $('#search').keypress(function(e){
+          if(e.which == 13){
+            dt.DataTable().draw()
+          }
+        })
+        dt.DataTable( {
+            "processing": true,
+            "serverSide": true,
+            searching:false,
+            "columns": [
+              { "name": "name",   "data": 'name' },
+              { "name": "email",   "data": 'email' },
+              { "name": "action",  "data": 'action' },
+            ],
+            "columnDefs": [
+              { "name": "name",   "data": 'name' },
+              { "name": "email",   "data": 'email' },
+              { "name": "action",  "data": 'action' },
+            ],
+            "ajax": {
+              url : "<%= @dataTableUrl %>",
+              data :(d)=> {
+                d.q = $('#search').val()
+                d.field = $('#field').val()
+                d.operator = $('#operator').val()
+              }
+            }
+        });
+      })
+    </script>
+  <% end %>
+</div>

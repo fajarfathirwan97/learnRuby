@@ -1,4 +1,6 @@
 class RoleController < ApplicationController
+  before_action :authenticate_user!
+
   def column
     @column = ["name"]
   end

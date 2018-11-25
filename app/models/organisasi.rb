@@ -1,3 +1,6 @@
 class Organisasi < ApplicationRecord
-  belongs_to :users
+  validates :email, presence: true
+  validates :website, presence: true
+  validates :name, presence: true
+  validates :phone, presence: true
 end
